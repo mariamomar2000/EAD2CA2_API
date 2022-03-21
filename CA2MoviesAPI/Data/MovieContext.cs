@@ -9,7 +9,6 @@ namespace CA2MoviesAPI.Data
         public MovieContext(DbContextOptions<MovieContext> options) : base(options) { }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieComment> MovieComments { get; set; }
-        public DbSet<Screening> Screenings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>()

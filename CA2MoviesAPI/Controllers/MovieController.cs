@@ -31,14 +31,14 @@ namespace CA2MoviesAPI.Controllers
             return _context.Movies.OrderBy(i => i.Name);
         }
 
-        // GET api/Movie/movieName/
+        // GET api/Movie/movieId/
         [HttpGet("/{id}/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Movie> GetMovieById(int id)
         {
-            Movie movie = _context.Movies.Include("Screenings").FirstOrDefault(i => i.ID == id);
+            Movie movie = _context.Movies.FirstOrDefault(i => i.ID == id);
             if (movie == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace CA2MoviesAPI.Controllers
             return Ok(movies);
         }
 
-        // GET api/Movie/id/comments/
+        // GET api/Movie/movieId/comments/
         [HttpGet("/{id}/comments/", Name = "GetComments")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
@@ -76,7 +76,7 @@ namespace CA2MoviesAPI.Controllers
             return Ok(movieComments);
         }
 
-        // GET api/Movie/movieName/comments/id
+        // GET api/Movie/movieId/comments/id
         [HttpGet("/{id}/comments/{cid}/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
@@ -91,7 +91,7 @@ namespace CA2MoviesAPI.Controllers
             return Ok(movieComment);
         }
 
-        // GET api/Movie/movieName/comments/id
+        // POST api/Movie/movieId/comments/
         [HttpPost("/{id}/comments/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)] // for swagger doc/UI
