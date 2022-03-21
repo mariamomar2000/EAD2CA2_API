@@ -1,2 +1,2 @@
 # EAD2CA2
-EAD2 CA2 Android Mobile App
+EAD2 CA2 Android Mobile App API
