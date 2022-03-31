@@ -34,7 +34,9 @@ namespace CA2MoviesAPI.Models
         }
         public string Thumbnail { get; set; }   // null
 
-        public string Screenings { get; set; }
+        public string Screenings { get; set; } // null
+
+        public string Runtime { get; set; } // null
 
         // navigation property to comments that movie contains, virtual => lazy loading
         public virtual ICollection<MovieComment> MovieComments { get; set; }
