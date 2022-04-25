@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CA2MoviesAPI.Controllers
 {
@@ -26,13 +27,13 @@ namespace CA2MoviesAPI.Controllers
         // GET api/Movie/
         [HttpGet]
         [Produces("application/json")]
-        public IEnumerable<Movie> GetMovies()
+        public async Task<ActionResult<Movie>> GetMovies()
         {
-            return _context.Movies.OrderBy(i => i.Name);
+            return Ok(await _context.Movies.OrderBy(i => i.Name).ToListAsync());
         }
 
         // GET api/Movie/movieId/
-        [HttpGet("/{id}/")]
+        [HttpGet("id/{id}/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -53,7 +54,7 @@ namespace CA2MoviesAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Movie> GetMoviesByGenre(string genre)
         {
-            IEnumerable<Movie> movies = _context.Movies.Where(i => i.Genre.ToUpper() == genre.ToUpper());
+            IEnumerable<Movie> movies = _context.Movies.Where(i => i.Genre == genre);
             if (movies == null)
             {
                 return NotFound();
@@ -62,7 +63,7 @@ namespace CA2MoviesAPI.Controllers
         }
 
         // GET api/Movie/movieId/comments/
-        [HttpGet("/{id}/comments/", Name = "GetComments")]
+        [HttpGet("id/{id}/comments/", Name = "GetComments")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -77,7 +78,7 @@ namespace CA2MoviesAPI.Controllers
         }
 
         // GET api/Movie/movieId/comments/id
-        [HttpGet("/{id}/comments/{cid}/")]
+        [HttpGet("id/{id}/comments/{cid}/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)] // for swagger doc/UI
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -92,7 +93,7 @@ namespace CA2MoviesAPI.Controllers
         }
 
         // POST api/Movie/movieId/comments/
-        [HttpPost("/{id}/comments/")]
+        [HttpPost("id/{id}/comments/")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)] // for swagger doc/UI
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

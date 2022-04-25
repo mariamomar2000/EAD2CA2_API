@@ -41,6 +41,14 @@ namespace CA2MoviesAPI
             services.AddDbContext<MovieContext>(options => options
                     //.UseLazyLoadingProxies()
                     .UseSqlServer(Configuration.GetConnectionString("MovieContext")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +60,8 @@ namespace CA2MoviesAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CA2MoviesAPI v1"));
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
